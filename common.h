@@ -4,6 +4,11 @@
 #include <vtkContextView.h>
 #include <vtkRenderer.h>
 
+class Base {
+public:
+    virtual void Draw(std::vector<vtkSmartPointer<vtkContextView>> views) = 0;
+    virtual ~Base() = default;
+};
 
 namespace Helper{
 static std::array<double, 4> get_viewport(int row, int col, int rows, int cols) {

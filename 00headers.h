@@ -1,5 +1,6 @@
 #include "common.h"
 
+class vtkChartXY;
 namespace AreaPlot {
-void Draw(std::vector<vtkSmartPointer<vtkContextView>> views);
-}
+void Draw(vtkSmartPointer<vtkChartXY> chart);
+};

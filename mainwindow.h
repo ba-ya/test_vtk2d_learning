@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QVTKOpenGLStereoWidget.h>
+#include <vtkChartXY.h>
 #include <vtkContextView.h>
 
 QT_BEGIN_NAMESPACE
@@ -32,5 +33,6 @@ private:
 
     std::shared_ptr<QVTKOpenGLStereoWidget> vtk_widget;
     std::vector<vtkSmartPointer<vtkContextView>> views;
+    vtkSmartPointer<vtkChartXY> chartxy;
 };
 #endif // MAINWINDOW_H

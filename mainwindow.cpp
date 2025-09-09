@@ -37,6 +37,10 @@ void MainWindow::init()
     vtk_widget = vtk_w;
     ui->layout->addWidget(vtk_widget.get());
 
+    if (views.size() != 1) {
+        resize_render(1, 1, 1);
+    }
+
     init_examples();
 }
 
@@ -57,7 +61,7 @@ void MainWindow::init_examples()
         file.close();
 
         // 使用正则匹配 namespace 名称
-        static QRegularExpression regex(R"(namespace\s*(\w+)\s*\{)");
+        static QRegularExpression regex(R"(namespace\s*(\w+)\s+)");
         QRegularExpressionMatchIterator i = regex.globalMatch(content);
         while (i.hasNext()) {
             names << i.next().captured(1);
@@ -77,20 +81,20 @@ void MainWindow::init_examples()
         }
     };
     init_table(ui->table, get_class_name());
-
     connect(ui->table, &QTableWidget::itemDoubleClicked, this, [this](QTableWidgetItem *item) {
-        ui->lineEdit_name->setText(QString("%1, %2").arg(item->row()+ 1).arg(item->text()));
+        ui->lineEdit_name->setText(QString("%1-%2").arg(item->row()+ 1).arg(item->text()));
         do_something(item->text());
     });
+
+    chartxy = vtkSmartPointer<vtkChartXY>::New();
 }
 
 void MainWindow::do_something(QString name_class)
 {
-    if (views.size() != 1) {
-        resize_render(1, 1, 1);
-    }
+    views[0]->GetScene()->RemoveAllItems();
     if (name_class == "AreaPlot") {
-        AreaPlot::Draw(views);
+        auto id = views[0]->GetScene()->AddItem(chartxy);
+        AreaPlot::Draw(chartxy);
     }
     do_render();
 }
@@ -98,7 +102,8 @@ void MainWindow::do_something(QString name_class)
 void MainWindow::resize_render(int count, int grid_rows, int grid_cols)
 {
     for (auto &view : views) {
-        vtk_widget->renderWindow()->RemoveRenderer(view->GetRenderer());
+        auto render = view->GetRenderer();
+        vtk_widget->renderWindow()->RemoveRenderer(render);
     }
     views.clear();
     auto colors = vtkSmartPointer<vtkNamedColors>::New();
