@@ -87,21 +87,19 @@ void MainWindow::init_examples()
     });
 
     chartxy = vtkSmartPointer<vtkChartXY>::New();
+    chartbox = vtkSmartPointer<vtkChartBox>::New();
 }
 
 void MainWindow::do_something(QString name_class)
 {
     clear();
-    auto colors = vtkSmartPointer<vtkNamedColors>::New();
-    int id = 0;
     if (name_class == "AreaPlot") {
-        id = views[0]->GetScene()->AddItem(chartxy);
         AreaPlot::Draw(views, chartxy);
     } else if (name_class == "BarChart") {
-        id = views[0]->GetScene()->AddItem(chartxy);
         BarChart::Draw(views, chartxy);
+    } else if (name_class == "BoxChart") {
+        BoxChart::Draw(views, chartbox);
     }
-    qDebug() << id << name_class;
     do_render();
 }
 
@@ -139,5 +137,6 @@ void MainWindow::clear()
         view->GetScene()->RemoveAllItems();
     }
     chartxy->ClearPlots();
+    chartbox->ClearPlots();
 }
 
