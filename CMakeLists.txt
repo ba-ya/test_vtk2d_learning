@@ -25,6 +25,7 @@ set(EXAMPLE
     common.h
     00headers.h
     examples/01AreaPlot.cpp
+    examples/02BarChart.cpp
 )
 
 set(PROJECT_SOURCES

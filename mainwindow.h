@@ -25,6 +25,7 @@ private:
     void init_examples();
     void do_something(QString name_class);
 
+    void clear();
     void resize_render(int count, int grid_rows, int grid_cols);
     void do_render();
 

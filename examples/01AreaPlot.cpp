@@ -10,15 +10,14 @@
 #include <vtkPlotArea.h>
 #include <vtkBrush.h>
 
-void AreaPlot::Draw(vtkSmartPointer<vtkChartXY> chart)
+void AreaPlot::Draw(std::vector<vtkSmartPointer<vtkContextView> > views, vtkSmartPointer<vtkChartXY> chart)
 {
-    chart->ClearPlots();
-
     auto colors = vtkSmartPointer<vtkNamedColors>::New();
     chart->SetTitle("Area Plot");
     chart->GetTitleProperties()->SetFontSize(36);
     chart->GetTitleProperties()->SetColor(colors->GetColor3d("Banana").GetData());
-
+    auto view = views[0];
+    view->GetRenderer()->SetBackground(colors->GetColor3d("SlateGray").GetData());
     for (int i = 0; i < 2; ++i) {
         chart->GetAxis(i)->GetTitleProperties()->SetFontSize(24);
         chart->GetAxis(i)->GetTitleProperties()->SetColor(colors->GetColor3d("Orange").GetData());

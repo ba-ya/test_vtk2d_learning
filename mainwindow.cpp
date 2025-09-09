@@ -91,16 +91,23 @@ void MainWindow::init_examples()
 
 void MainWindow::do_something(QString name_class)
 {
-    views[0]->GetScene()->RemoveAllItems();
+    clear();
+    auto colors = vtkSmartPointer<vtkNamedColors>::New();
+    int id = 0;
     if (name_class == "AreaPlot") {
-        auto id = views[0]->GetScene()->AddItem(chartxy);
-        AreaPlot::Draw(chartxy);
+        id = views[0]->GetScene()->AddItem(chartxy);
+        AreaPlot::Draw(views, chartxy);
+    } else if (name_class == "BarChart") {
+        id = views[0]->GetScene()->AddItem(chartxy);
+        BarChart::Draw(views, chartxy);
     }
+    qDebug() << id << name_class;
     do_render();
 }
 
 void MainWindow::resize_render(int count, int grid_rows, int grid_cols)
 {
+    // FIX ME: clear() not right
     for (auto &view : views) {
         auto render = view->GetRenderer();
         vtk_widget->renderWindow()->RemoveRenderer(render);
@@ -124,5 +131,13 @@ void MainWindow::resize_render(int count, int grid_rows, int grid_cols)
 void MainWindow::do_render()
 {
     vtk_widget->renderWindow()->Render();
+}
+
+void MainWindow::clear()
+{
+    for (auto &view : views) {
+        view->GetScene()->RemoveAllItems();
+    }
+    chartxy->ClearPlots();
 }
 
