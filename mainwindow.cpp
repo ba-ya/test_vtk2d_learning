@@ -88,6 +88,7 @@ void MainWindow::init_examples()
 
     chartxy = vtkSmartPointer<vtkChartXY>::New();
     chartbox = vtkSmartPointer<vtkChartBox>::New();
+    chartmat = vtkSmartPointer<vtkChartMatrix>::New();
 }
 
 void MainWindow::do_something(QString name_class)
@@ -99,6 +100,10 @@ void MainWindow::do_something(QString name_class)
         BarChart::Draw(views, chartxy);
     } else if (name_class == "BoxChart") {
         BoxChart::Draw(views, chartbox);
+    } else if (name_class == "ChartMatrix") {
+        ChartMatrix::Draw(views, chartmat);
+    } else {
+        qDebug() << name_class << "not exist";
     }
     do_render();
 }
@@ -120,6 +125,7 @@ void MainWindow::resize_render(int count, int grid_rows, int grid_cols)
         auto view = vtkSmartPointer<vtkContextView>::New();
         auto render = view->GetRenderer();
         render->SetBackground(color_list.at(i % color_list.size()));
+        render->UseFXAAOn();
         view->SetRenderWindow(vtk_widget->renderWindow());
         views.push_back(view);
     }
@@ -136,7 +142,5 @@ void MainWindow::clear()
     for (auto &view : views) {
         view->GetScene()->RemoveAllItems();
     }
-    chartxy->ClearPlots();
-    chartbox->ClearPlots();
 }
 

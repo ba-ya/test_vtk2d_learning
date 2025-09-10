@@ -27,6 +27,7 @@ set(EXAMPLE
     examples/01AreaPlot.cpp
     examples/02BarChart.cpp
     examples/03BoxChart.cpp
+    examples/04ChartMatrix.cpp
 )
 
 set(PROJECT_SOURCES
@@ -39,7 +40,8 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(test_vtk2d_learning
+
+qt_add_executable(test_vtk2d_learning
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )

@@ -15,6 +15,7 @@ void AreaPlot::Draw(std::vector<vtkSmartPointer<vtkContextView> > views, vtkSmar
     auto colors = vtkSmartPointer<vtkNamedColors>::New();
     auto view = views[0];
     view->GetRenderer()->SetBackground(colors->GetColor3d("SlateGray").GetData());
+    chart->ClearPlots();
     view->GetScene()->AddItem(chart);
 
     chart->SetTitle("Area Plot");

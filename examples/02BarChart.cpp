@@ -23,6 +23,7 @@ void BarChart::Draw(std::vector<vtkSmartPointer<vtkContextView>> views, vtkSmart
     auto colors = vtkSmartPointer<vtkNamedColors>::New();
     auto view = views[0];
     view->GetRenderer()->SetBackground(colors->GetColor3d("Seashell").GetData());
+    chart->ClearPlots();
     view->GetScene()->AddItem(chart);
 
     auto color_series = vtkSmartPointer<vtkColorSeries>::New();

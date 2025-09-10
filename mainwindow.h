@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QVTKOpenGLStereoWidget.h>
 #include <vtkChartBox.h>
+#include <vtkChartMatrix.h>
 #include <vtkChartXY.h>
 #include <vtkContextView.h>
 
@@ -38,5 +39,6 @@ private:
 
     vtkSmartPointer<vtkChartXY> chartxy;
     vtkSmartPointer<vtkChartBox> chartbox;
+    vtkSmartPointer<vtkChartMatrix> chartmat;
 };
 #endif // MAINWINDOW_H
